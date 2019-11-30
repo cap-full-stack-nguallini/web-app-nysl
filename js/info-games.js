@@ -130,7 +130,7 @@ function detailsWideScreen(i) {
         <div class='embed-responsive embed-responsive-16by9'>\
             <iframe class='embed-responsive-item' src='" + mapa(games[i].stadium) + "'></iframe>\
         </div>\
-		</section>"
+		</section> <br> <script> titulito = '2'</script>";
     return detailWideScreen;
 }
 
@@ -219,7 +219,7 @@ function listasWideScreen() {
     for (var i = 0; i < games.length; i++) {
         if (teamSelected === games[i].team_1 || teamSelected === games[i].team_2 || teamSelected === "ALL") {
             fullListWideScreen += "<li>\
-        <a class='list-group-item d-flex justify-content-between border-success rounded-0' onClick='showHideWideScreen(" + i + ")' href='#detalle-widescreen'> \
+        <a id='linkdescope' class='list-group-item d-flex justify-content-between border-success rounded-0' onClick='showHideWideScreen(" + i + ")' href='#detalle-widescreen'> \
 		<span class = 'badge badge-success badge'>" + games[i].date + "</span> \
 		<img src='" + shield(games[i].team_1) + "' alt='" + games[i].team_1 + "'> \
 		<span class='text-success'>" + games[i].team_1 + " - " + games[i].team_2 + "</span> \
@@ -248,3 +248,26 @@ function updateUI() {
 updateUI();
 
 $("#team-filter").on("change", updateUI);
+
+function optionSelect() {
+
+    var options = "";
+
+    for (var i = 0; i < games.length; i++) {
+        options += "<option value='" + i + "'>" + games[i].date + " - " + games[i].time + " - " + games[i].team_1 + " vs " + games[i].team_2 + "</option>";
+    }
+    return options;
+}
+
+if (document.getElementById("search-option-select")) {
+    document.getElementById("search-option-select").innerHTML = optionSelect();
+}
+
+if (document.getElementById("input-option-select")) {
+    document.getElementById("input-option-select").innerHTML = optionSelect();
+}
+
+function searchOptionselect() {
+    cleanupUi();
+    startDatabaseQueries();
+}
