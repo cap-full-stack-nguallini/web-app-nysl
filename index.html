@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Schedule - NYSL">
+    <link rel="apple-touch-icon" href="icon/apple-touch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="icon/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icon/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icon/touch-icon-ipad-retina.png">
+    <link rel="shortcut icon" sizes="196x196" href="icon/icon-196x196.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/estilos.css">
+    <title>Schedule - NYSL</title>
+</head>
+
+<body class="container-fluid bg-success">
+
+    <section class="sticky-top bg-success text-white">
+
+        <header>
+            <h1 class="text-center font-weight-bold"><img src="img/logo.png" alt="logo"> NYSL</h1>
+        </header>
+
+        <nav>
+            <ul class="nav nav-tabs text-center d-flex">
+                <li class="nav-item flex-fill">
+                    <a class="nav-link font-weight-bold text-body border active" href="#">Schedule</a>
+                </li>
+                <li class="nav-item flex-fill">
+                    <a class="nav-link font-weight-bold text-body border" href="events.html">Events</a>
+                </li>
+                <li class="nav-item flex-fill">
+                    <a class="nav-link font-weight-bold text-body border" href="contact.html">Contact</a>
+                </li>
+            </ul>
+        </nav>
+
+    </section>
+
+    <section>
+        <h2 id="oculto">Schedule</h2>
+        <ul id="lista" class="list-group text-success font-weight-bold"></ul>
+        <br>
+        <br>
+        <form id="team-filter" class="fixed-bottom">
+            <select class="form-control bg-success font-weight-bold text-body" id="team-selected">
+		<option value="ALL" selected>ALL Games</option>
+		<option value="U1">U1 Games</option>
+		<option value="U2">U2 Games</option>
+	    <option value="U3">U3 Games</option>
+		<option value="U4">U4 Games</option>
+		<option value="U5">U5 Games</option>
+	    <option value="U6">U6 Games</option>
+			</select>
+        </form>
+    </section>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="js/data-games.js"></script>
+    <script src="js/info-games.js"></script>
+
+</body>
+
+</html>
