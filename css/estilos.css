@@ -2,31 +2,32 @@ a:link {
     text-decoration: none;
 }
 
-#oculto {
-    display: none;
-}
-
-#lista img {
+#lista img,
+#lista-widescreen img {
     height: 25px;
     width: 25px;
 }
 
-#detalle {
+#detalle,
+#detalle-widescreen {
     background: url("../img/grass.jpg");
     color: #FFFFFF;
     font-size: 120%;
 }
 
-#detalle h2 {
+#detalle h3,
+#detalle-widescreen h3 {
     font-size: 150%;
     margin-top: 5%;
 }
 
-#detalle img {
+#detalle img,
+#detalle-widescreen img {
     width: 35%;
 }
 
-#detalle h2 img {
+#detalle h3 img,
+#detalle-widescreen h3 img {
     width: 20%;
 }
 
@@ -48,4 +49,20 @@ a:link {
 
 #events p {
     text-indent: 3%;
+}
+
+.oculto {
+    display: none;
+}
+
+@media (orientation: landscape) {
+    #lista-aheadback {
+        display: none;
+    }
+}
+
+@media (orientation: portrait) {
+    #listaydetalle-widescreen {
+        display: none;
+    }
 }

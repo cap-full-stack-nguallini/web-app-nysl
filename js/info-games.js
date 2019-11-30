@@ -1,10 +1,8 @@
-function pasarVariables(pagina, nombres) {
-    pagina += "?";
-    nomVec = nombres.split(",");
-    for (i = 0; i < nomVec.length; i++)
-        pagina += nomVec[i] + "=" + escape(eval(nomVec[i])) + "&";
-    pagina = pagina.substring(0, pagina.length - 1);
-    location.href = pagina;
+function showHide(id) {
+    if (document.getElementById) {
+        var el = document.getElementById(id);
+        el.style.display = (el.style.display == "none") ? "block" : "none";
+    }
 }
 
 function shield(team) {
@@ -88,9 +86,112 @@ function mapa(map) {
     return url;
 }
 
-function pasarPorUrl(indice) {
-    idGame = indice;
-    pasarVariables('game-detail.html', 'idGame');
+function details(i) {
+    var detail = "<section>\
+            <a id='atras' class='text-white font-weight-bold' onClick='fullShowHideReverse(" + i + ")' href='#menu'>\
+                &lt;- Back</a>\
+            <h3 class='text-center'><img src='" + shield(games[i].team_1) + "' alt='" + games[i].team_1 + "'>" + games[i].team_1 + " vs " + games[i].team_2 + "<img src='" + shield(games[i].team_2) + "' alt='" + games[i].team_2 + "'></h2>\
+        <br>\
+        <div class='row'>\
+            <div class='col-6'><img src='img/date.png' alt='date icon' class='mx-auto d-block'>\
+                <p class='text-center'>" + games[i].date + "</p>\
+            </div>\
+            <div class='col-6'><img src='img/time.png' alt='time icon' class='mx-auto d-block'>\
+                <p class='text-center'>" + games[i].time + "</p>\
+            </div>\
+        </div>\
+        <br>\
+        <div class='row'>\
+            <div class='col-6'><img src='img/stadium.png' alt='stadium icon' class='mx-auto d-block'>\
+                <p class='text-center'>" + games[i].stadium + "</p>\
+            </div>\
+            <div class='col-6'><img src='img/location.png' alt='location icon' class='mx-auto d-block'>\
+                <p class='text-center'>" + address(games[i].stadium) + "</p>\
+            </div>\
+        </div>\
+        <br>\
+        <div class='embed-responsive embed-responsive-4by3'>\
+            <iframe class='embed-responsive-item' src='" + mapa(games[i].stadium) + "'></iframe>\
+        </div>\
+		</section>"
+    return detail;
+}
+
+function detailsWideScreen(i) {
+    var detailWideScreen = "<section>\
+			<br>\
+			<br>\
+			<br>\
+			<br>\
+            <h3 class='text-center'><img src='" + shield(games[i].team_1) + "' alt='" + games[i].team_1 + "'>" + games[i].team_1 + " vs " + games[i].team_2 + "<img src='" + shield(games[i].team_2) + "' alt='" + games[i].team_2 + "'></h2>\
+                <p class='text-center'>" + games[i].date + ' - ' + games[i].time + "</p>\
+                <p class='text-center'>" + games[i].stadium + "</p>\
+                <p class='text-center'>" + address(games[i].stadium) + "</p>\
+        <div class='embed-responsive embed-responsive-16by9'>\
+            <iframe class='embed-responsive-item' src='" + mapa(games[i].stadium) + "'></iframe>\
+        </div>\
+		</section> <br> <script> titulito = '2'</script>";
+    return detailWideScreen;
+}
+
+function detailWideScreenInit() {
+    var inicioWideScreenDetalle = "<div class='text-center'>\
+					<br>SELECT A MATCH\
+					<br>\
+					<br>\
+					<img src='img/flecha.png' alt='detail init'>\
+					</div>";
+    return inicioWideScreenDetalle;
+}
+
+function generaDetails(id) {
+    if (document.getElementById("detalle")) {
+        document.getElementById("detalle").innerHTML = details(id);
+    }
+}
+
+function generaDetailsWideScreen(id) {
+    if (document.getElementById("detalle-widescreen")) {
+        document.getElementById("detalle-widescreen").innerHTML = detailsWideScreen(id);
+    }
+}
+
+function eraseDetails() {
+    if (document.getElementById("detalle")) {
+        document.getElementById("detalle").innerHTML = "";
+    }
+}
+
+function eraseDetailsWideScreen() {
+    if (document.getElementById("detalle-widescreen")) {
+        document.getElementById("detalle-widescreen").innerHTML = "";
+    }
+}
+
+function fullShowHide(id) {
+    generaDetails(id);
+    showHide("team-filter");
+    showHide("menu");
+    showHide("lista");
+    showHide("lista-widescreen");
+    showHide("detalle-widescreen");
+    showHide("cabecera");
+}
+
+function fullShowHideReverse(id) {
+    eraseDetails();
+    generaDetailsWideScreen(id);
+    showHide("team-filter");
+    showHide("menu");
+    showHide("lista");
+    showHide("lista-widescreen");
+    showHide("detalle-widescreen");
+    showHide("cabecera");
+}
+
+function showHideWideScreen(id) {
+    eraseDetailsWideScreen();
+    generaDetailsWideScreen(id);
 }
 
 function listas() {
@@ -98,59 +199,75 @@ function listas() {
     var fullList = "";
     for (var i = 0; i < games.length; i++) {
         if (teamSelected === games[i].team_1 || teamSelected === games[i].team_2 || teamSelected === "ALL") {
-            fullList += "<li class='list-group-item d-flex justify-content-between border-success rounded-0' onclick='pasarPorUrl(" + i + ")'> \
+            fullList += "<li>\
+        <a class='list-group-item d-flex justify-content-between border-success rounded-0' onClick='fullShowHide(" + i + ")' href='#detalle'> \
 		<span class = 'badge badge-success badge'>" + games[i].date + "</span> \
 		<img src='" + shield(games[i].team_1) + "' alt='" + games[i].team_1 + "'> \
-		<span class='text - success'>" + games[i].team_1 + " and " + games[i].team_2 + "</span> \
+		<span class='text-success'>" + games[i].team_1 + " and " + games[i].team_2 + "</span> \
 		<img src='" + shield(games[i].team_2) + "' alt='" + games[i].team_2 + "'> \
 		<span class = 'text-success'>></span> \
+		</a> \
 		</li>"
         }
     }
     return fullList;
 }
 
+function listasWideScreen() {
+    var teamSelected = document.querySelector("#team-selected").value;
+    var fullListWideScreen = "";
+    for (var i = 0; i < games.length; i++) {
+        if (teamSelected === games[i].team_1 || teamSelected === games[i].team_2 || teamSelected === "ALL") {
+            fullListWideScreen += "<li>\
+        <a id='linkdescope' class='list-group-item d-flex justify-content-between border-success rounded-0' onClick='showHideWideScreen(" + i + ")' href='#detalle-widescreen'> \
+		<span class = 'badge badge-success badge'>" + games[i].date + "</span> \
+		<img src='" + shield(games[i].team_1) + "' alt='" + games[i].team_1 + "'> \
+		<span class='text-success'>" + games[i].team_1 + " - " + games[i].team_2 + "</span> \
+		<img src='" + shield(games[i].team_2) + "' alt='" + games[i].team_2 + "'> \
+		<span class = 'text-success'>></span> \
+		</a> \
+		</li>"
+        }
+    }
+    return fullListWideScreen;
+}
+
+if (document.getElementById("detalle-widescreen")) {
+    document.getElementById("detalle-widescreen").innerHTML = detailWideScreenInit();
+}
+
 function updateUI() {
     if (document.getElementById("lista")) {
         document.getElementById("lista").innerHTML = listas();
     }
-}
-
-function details() {
-    var detail = "<section>\
-            <a class='text-white font-weight-bold' href='index.html'>\
-                &lt;- Back</a>\
-            <h2 class='text-center'><img src='" + shield(games[idGame].team_1) + "' alt='" + games[idGame].team_1 + "'>" + games[idGame].team_1 + " vs " + games[idGame].team_2 + "<img src='" + shield(games[idGame].team_2) + "' alt='" + games[idGame].team_2 + "'></h2>\
-        <br>\
-        <div class='row'>\
-            <div class='col-6'><img src='img/date.png' alt='date icon' class='mx-auto d-block'>\
-                <p class='text-center'>" + games[idGame].date + "</p>\
-            </div>\
-            <div class='col-6'><img src='img/time.png' alt='time icon' class='mx-auto d-block'>\
-                <p class='text-center'>" + games[idGame].time + "</p>\
-            </div>\
-        </div>\
-        <br>\
-        <div class='row'>\
-            <div class='col-6'><img src='img/stadium.png' alt='stadium icon' class='mx-auto d-block'>\
-                <p class='text-center'>" + games[idGame].stadium + "</p>\
-            </div>\
-            <div class='col-6'><img src='img/location.png' alt='location icon' class='mx-auto d-block'>\
-                <p class='text-center'>" + address(games[idGame].stadium) + "</p>\
-            </div>\
-        </div>\
-        <br>\
-        <div class='embed-responsive embed-responsive-4by3'>\
-            <iframe class='embed-responsive-item' src='" + mapa(games[idGame].stadium) + "'></iframe>\
-        </div>\
-		</section>";
-    return detail;
-}
-
-if (document.getElementById("detalle")) {
-    document.getElementById("detalle").innerHTML = details();
+    if (document.getElementById("lista-widescreen")) {
+        document.getElementById("lista-widescreen").innerHTML = listasWideScreen();
+    }
 }
 
 updateUI();
 
 $("#team-filter").on("change", updateUI);
+
+function optionSelect() {
+
+    var options = "";
+
+    for (var i = 0; i < games.length; i++) {
+        options += "<option value='" + i + "'>" + games[i].date + " - " + games[i].time + " - " + games[i].team_1 + " vs " + games[i].team_2 + "</option>";
+    }
+    return options;
+}
+
+if (document.getElementById("search-option-select")) {
+    document.getElementById("search-option-select").innerHTML = optionSelect();
+}
+
+if (document.getElementById("input-option-select")) {
+    document.getElementById("input-option-select").innerHTML = optionSelect();
+}
+
+function searchOptionselect() {
+    cleanupUi();
+    startDatabaseQueries();
+}
